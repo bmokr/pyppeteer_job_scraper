@@ -10,6 +10,10 @@ class EnvironmentManager:
         self._url1 = None
         self._url2 = None
         self._url3 = None
+        self._job = None
+        self._level = None
+        self._city1 = None
+        self._city2 = None
 
     def set_env(self, filepath: str):
         self.env_path = Path(filepath)
@@ -54,3 +58,51 @@ class EnvironmentManager:
             self._url3 = url3
 
         return self._url3
+    
+    @property
+    def job(self):
+        job = self.dotenv_values.get("job")
+
+        if job is None:
+            raise RuntimeError(f'"job" not specified in "{self.env_path}" file')
+
+        if self._job is None:
+            self._job = job
+
+        return self._job
+
+    @property
+    def level(self):
+        level = self.dotenv_values.get("level")
+
+        if level is None:
+            raise RuntimeError(f'"level" not specified in "{self.env_path}" file')
+
+        if self._level is None:
+            self._level = level
+
+        return self._level
+
+    @property
+    def city1(self):
+        city1 = self.dotenv_values.get("city1")
+
+        if city1 is None:
+            raise RuntimeError(f'"city1" not specified in "{self.env_path}" file')
+
+        if self._city1 is None:
+            self._city1 = city1
+
+        return self._city1
+
+    @property
+    def city2(self):
+        city2 = self.dotenv_values.get("city2")
+
+        if city2 is None:
+            raise RuntimeError(f'"city2" not specified in "{self.env_path}" file')
+
+        if self._city2 is None:
+            self._city2 = city2
+
+        return self._city2
