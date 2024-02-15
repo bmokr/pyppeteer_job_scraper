@@ -19,7 +19,7 @@ async def scrape_indeed():
     page = await browser.newPage()
 
 
-    await page.goto(url1)
+    await page.goto(url1, {'timeout': 60000})
 
 
     await page.waitForSelector('#text-input-what')
@@ -42,6 +42,10 @@ async def scrape_indeed():
         title_element = await job.querySelector('h2.jobTitle span[title]')
         title = await page.evaluate('(element) => element.textContent', title_element)
 
+        # Extract the href attribute
+        link_element = await job.querySelector('h2.jobTitle a')
+        href = await page.evaluate('(element) => element.getAttribute("href")', link_element)
+        url = url1+href
 
         # Extract the company name
         company_element = await job.querySelector('div.company_location [data-testid="company-name"]')
@@ -53,7 +57,7 @@ async def scrape_indeed():
         location = await page.evaluate('(element) => element.textContent', location_element)
 
 
-        print({'title': title, 'company': company, 'location': location})
+        print({'title': title, 'company': company, 'location': location, 'link': url})
 
 
 
