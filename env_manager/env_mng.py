@@ -14,6 +14,8 @@ class EnvironmentManager:
         self._level = None
         self._city1 = None
         self._city2 = None
+        self._pages = None
+        self._cities = None
 
     def set_env(self, filepath: str):
         self.env_path = Path(filepath)
@@ -106,3 +108,35 @@ class EnvironmentManager:
             self._city2 = city2
 
         return self._city2
+
+    @property
+    def pages(self):
+        pages = self.dotenv_values.get("pages")
+
+        if pages is None:
+            raise RuntimeError(f'"pages" not specified in "{self.env_path}" file')
+
+        if self._pages is None:
+            temp = []
+            for city in pages.split(" "):
+                temp.append(city)
+            self._pages = temp
+
+        return self._pages
+
+    @property
+    def cities(self):
+        cities = self.dotenv_values.get("cities")
+
+        if cities is None:
+            raise RuntimeError(f'"cities" not specified in "{self.env_path}" file')
+
+        if self._cities is None:
+            temp = []
+            for city in cities.split(" "):
+                temp.append(city)
+            self._cities = temp
+
+        return self._cities
+
+        
