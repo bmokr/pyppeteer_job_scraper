@@ -1,33 +1,33 @@
 from env_manager.env_mng import EnvironmentManager
 import asyncio
 from pyppeteer import launch
+from scraper.scraper import JobScraper
+
 
 # Initialization of environmental variables
 manager = EnvironmentManager()
 manager.set_env('.env.pages')
 
-url1 = manager.url1
-url2 = manager.url2
-url3 = manager.url3
-job_title = manager.job + ' ' + manager.level
-city_where = manager.cities[1]
-print(manager.pages)
+# Run the coroutine
+if __name__ == '__main__':
+    scraper = JobScraper()
+    scraper.search()
 
 
 # async def scrape_indeed():
-#     browser = await launch(headless=False)
+#     browser = await launch(autoClose=False, executablePath="BIN/thorium.exe", headless=False)
 #     page = await browser.newPage()
 
 
-#     await page.goto(url1, {'timeout': 60000})
+#     await page.goto(manager.url1, {'timeout': 60000})
 
 
 #     await page.waitForSelector('#text-input-what')
 #     await page.waitForSelector('#text-input-where')
 
 
-#     await page.type('#text-input-what', job_title)
-#     await page.type('#text-input-where', city_where)
+#     await page.type('#text-input-what', manager.job + " " + manager.level)
+#     await page.type('#text-input-where', manager.city1)
 
 
 #     await page.click('button[type="submit"]')
@@ -45,7 +45,7 @@ print(manager.pages)
 #         # Extract the href attribute
 #         link_element = await job.querySelector('h2.jobTitle a')
 #         href = await page.evaluate('(element) => element.getAttribute("href")', link_element)
-#         url = url1+href
+#         url = manager.url1+href
 
 #         # Extract the company name
 #         company_element = await job.querySelector('div.company_location [data-testid="company-name"]')
